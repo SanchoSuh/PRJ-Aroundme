@@ -1,0 +1,24 @@
+{% extends "AM_main.html" %}
+
+
+{% block AM_schedule %}
+    <div class="row">
+        <div id="button-add-schedule" class="default-padding">
+            <button type="button" class="btn btn-primary" id="add-schedule">Add schedule</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="default-padding">
+            <h3>My schedules</h3>
+            {% for member in member_list %}
+                <div class="custom-list">
+                    <p><h4>{{ member.name }}</h4></p>
+                    <p>Birthday : {{ member.birthday }}</p>
+                </div>
+            {% empty %}
+                <h3>No schedule</h3>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock AM_schedule %}

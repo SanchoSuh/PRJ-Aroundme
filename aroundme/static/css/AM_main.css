@@ -1,0 +1,15 @@
+#button-add-schedule {
+    padding : 1%;
+}
+
+.default-padding {
+    padding : 1%;
+}
+
+.custom-list {
+    margin : 5px;
+    padding : 1%;
+    background-color : WhiteSmoke;
+    border : 2px solid LightGray;
+    border-radius : 3px;
+}

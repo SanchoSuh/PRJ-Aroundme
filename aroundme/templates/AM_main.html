@@ -1,0 +1,54 @@
+<!-- AM_main.html -->
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>AroundMe : Be a good friend</title>
+        
+        <link rel="stylesheet" href="{% static 'css/AM_main.css' %}">
+        <!-- Adding Bootstrap CSS code script -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    </head>
+    
+    <body>
+        
+        
+        <div class = "container">
+            <!-- Header part1. Logo -->
+            <div class = "row">
+                <h1 class = "main logo">AroundMe</h1>
+            </div>
+            <!-- Header part2. Tab menus -->
+            <div class = "row">       
+                <ul class="nav nav-tabs">
+                    <li class = "nav-item active" role="presentation"><a href="#">Schedule</a></li>
+                    <li class = "nav-item" role="presentation"><a href="#">Friends</a></li>
+                    <!--<li class = "nav-item" role="presentation"><a href="#">Events</a></li>-->
+                    <li class = "nav-item" role="presentation"><a href="#">Me</a></li>
+                    <a class = "btn btn-default" href="#" role="button" style="float:right" id="login_button">Logout</a>                
+                </ul>                
+            </div>
+            
+            <!-- Main body parts embraced with Bootstrap container -->
+            <div class = "row">
+                <div class="col-md-5">
+                    <h2> Calendar </h2>
+                </div>
+                <div class="col-md-7">
+                {% block AM_schedule %} {% endblock %}
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Adding jQuery script -->
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script> 
+        <!-- Adding bootstrap script -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/AM_main_events.js' %}"></script>
+    
+    </body>
+    
+</html>
