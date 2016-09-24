@@ -15,9 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.views import login as django_login
+from django.contrib.auth.views import logout as django_logout
+
 from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.main_view, name='main_view')
+    url(r'^login/$', django_login,
+        {'template_name' : 'registration/login.html'},
+        name='django_login'),
+    url(r'^logout/$', django_logout,
+        {'next_page' : '/login/'},
+        name='django_logout'),
+    url(r'^signup/$', views.view_member_signup, name='view_member_signup'),
+    url(r'^$', views.view_event_list, name='view_event_list'),
+    #url(r'^$', views.view_main_page, name='view_main_page'),
+    url(r'^add_schedule/$', views.event_save_schedule, name='event_save_schedule'),
+    url(r'^delete_schedule/$', views.event_delete_schedule, name='event_delete_schedule')
 ]

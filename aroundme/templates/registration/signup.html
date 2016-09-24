@@ -1,0 +1,33 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Signup to AroundMe</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/AM_login.css' %}">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="login_layout_header">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-4">
+                        <h1> Signup to AroundMe </h1>
+                            <form method="POST" action=".">
+                                {% csrf_token %}
+
+                                {{ form.as_p }}
+                                <input type="submit" value="sign-up" />
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login to AroundMe</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/AM_login.css' %}">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="login_layout_header">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-4">
+                        <h1> Login to AroundMe </h1>
+                        {% if form.errors %}
+                            <p>User ID and password not matching</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-4">
+                    <form method="POST" action=".">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="id_username"><span class="username_text">User name</span></label>
+                            <p class="p_username">{{ form.username }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password"><span class="username_text"Password</span></label>
+                            <p class="p_username">{{ form.password }}</p>
+                        </div>
+                        <input type="hidden" name="text" value="/" />
+                        <button type="submit" class="btn btn-default">Login</button>
+
+                        <button type="button" class="btn btn-default" id="signup-button">Sign-up</button>
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+                </div>
+
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+        <script src="{% static 'js/AM_login_events.js' %}"></script>
+    </body>
+
+</html>
