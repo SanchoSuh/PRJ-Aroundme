@@ -2,14 +2,31 @@
 
 
 {% block AM_schedule %}
-    <div class="col-md-7">
+    <!-- Left blank 25% of the screen -->
+    <div class="col-md-3" id="left-layout">
+
+    </div>
+
+    <!-- main body of Event tab -->
+    <div class="col-md-6" id="mid-layout">
         <div class="row" id="my-schedules-align">
-            <div class="col-md-8">
-                <h3>My schedules</h3>
+
+            <!-- search window -->
+            <div class="col-md-9">
+                <div class="input-group" id="search-window">
+                    <input type="text" class="form-control" placeholder="Search keyword">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go</button>
+                    </span>
+                </div>
             </div>
-            <div class="col-md-4">
+
+            <div class="col-md-1"></div>
+
+            <!-- add event button -->
+            <div class="col-md-2">
                 <div id="button-add-schedule">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-schedule-modal">Add schedule</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-schedule-modal">Add event</button>
                         <div class="modal fade" id="add-schedule-modal" tabindex="-1" role="dialog" aria-labelledby="add-modal-label" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -33,11 +50,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="event-time-start" class="form-control-label">From when : </label>
-                                                <input type="datetime-local" class="form-control" id="event-time-start" name="event-time-start">
+                                                <input type="date" class="form-control" id="event-time-start" name="event-time-start">
                                             </div>
                                             <div class="form-group">
                                                 <label for="event-time-end" class="form-control-label">Till when : </label>
-                                                <input type="datetime-local" class="form-control" id="event-time-end" name="event-time-end">
+                                                <input type="date" class="form-control" id="event-time-end" name="event-time-end">
                                             </div>
                                             <div class="form-group>">
                                                 <label for="event-place" class="form-control-label">Where : </label>
@@ -72,10 +89,9 @@
         </div>
     </div>
 
-    <div class="col-md-5">
-        <h3> Calendar </h3>
-        <div id="my-calendar"></div>
-    </div>
+    <!-- Right blank 25% of the screen -->
+    <div class="col-md-3" id="right-layout">
 
+    </div>
 
 {% endblock AM_schedule %}

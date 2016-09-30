@@ -56,6 +56,13 @@ $('.event-list').on("click", function(event) {
 $('.event-list').dblclick(function() {
     console.log('event list double-clicked');
 
+    // Get data from server via AJAX
+
+    var modal = $('#add-schedule-modal').modal({
+
+    });
+
+    modal.find('.modal-title').text("test");
 });
 
 

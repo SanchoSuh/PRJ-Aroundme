@@ -45,8 +45,8 @@ class Anniversary(EventBase) :
 
 
 class PersonalEvent(EventBase) :
-    datetime_start = models.DateTimeField()
-    datetime_finish = models.DateTimeField()
+    date_start = models.DateField()
+    date_finish = models.DateField()
 
 
 

@@ -10,41 +10,54 @@
         <link rel="stylesheet" href="{% static 'css/AM_main.css' %}">
         <!-- Adding Bootstrap CSS code script -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static 'css/zabuto_calendar.min.css' %}">
+      <!--  <link rel="stylesheet" href="{% static 'css/zabuto_calendar.min.css' %}">-->
     </head>
     
     <body>
         
         
-        <div class = "container">
+        <div class = "container-fluid">
+
             <!-- Header part1. Logo -->
-            <div class = "row">
-                <h1 class = "main-logo">AroundMe</h1>
-            </div>
-            <!-- Header part2. Tab menus -->
-            <div class = "row">       
-                <ul class="nav nav-tabs">
-                    <li class = "nav-item active" role="presentation"><a href="#">Schedule</a></li>
-                    <li class = "nav-item" role="presentation"><a href="#">Friends</a></li>
-                    <!--<li class = "nav-item" role="presentation"><a href="#">Events</a></li>-->
-                    <li class = "nav-item" role="presentation"><a href="#">Me</a></li>
+                <div class = "row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <h1 class = "main-logo">AroundMe</h1>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <!-- Header part2. Tab menus -->
+                <div class = "row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <ul class="nav nav-tabs">
+                            <li class = "nav-item active" role="presentation"><a href="#">Events</a></li>
+                            <li class = "nav-item" role="presentation"><a href="#">Friends</a></li>
+                            <!--<li class = "nav-item" role="presentation"><a href="#">Events</a></li>-->
+                            <li class = "nav-item" role="presentation"><a href="#">My profile</a></li>
 
-                    <!--{%if user.is_authenticated &}-->
-                    <span id="hello-user-message">Hello, {{ user.username }} </span>
+                            <!--{%if user.is_authenticated &}-->
+                            <span id="hello-user-message">Hello, {{ user.username }} </span>
 
-                    <a class = "btn btn-default" href="#" role="button" style="float:right" id="logout_button">Logout</a>
+                            <a class = "btn btn-default" href="#" role="button" style="float:right" id="logout_button">Logout</a>
 
-                    <!--<button type="button" id="logout_button" class="btn btn-default navbar-btn" style="float:right">Logout</button>-->
-                </ul>
-            </div>
-            
-            <!-- Main body parts embraced with Bootstrap container -->
-            <div class = "row">
+                            <!--<button type="button" id="logout_button" class="btn btn-default navbar-btn" style="float:right">Logout</button>-->
+                        </ul>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <!-- Main body parts embraced with Bootstrap container -->
 
-                {% block AM_schedule %} {% endblock %}
 
-            </div>
-            
+
+                    <div class = "row" id="lightgrey-bg">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" >
+                        {% block AM_schedule %} {% endblock %}
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
         </div>
         
         <!-- Adding jQuery script -->
@@ -53,7 +66,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="{% static 'js/AM_main.js' %}"></script>
         <script src="{% static 'js/AM_main_events.js' %}"></script>
-        <script src="{% static 'js/zabuto_calendar.min.js' %}"></script>
+     <!--   <script src="{% static 'js/zabuto_calendar.min.js' %}"></script>-->
     
     </body>
     

@@ -71,8 +71,8 @@ def view_event_list(request):
     else:
         for event in event_list:
             if isinstance(event, PersonalEvent):
-                d_start = event.datetime_start.strftime('%Y.%m.%d %H:%M')
-                d_end = event.datetime_finish.strftime('%Y.%m.%d %H:%M')
+                d_start = event.date_start.strftime('%Y.%m.%d')
+                d_end = event.date_finish.strftime('%Y.%m.%d')
                 event_dict = {
                     'type' : 'p_event', 'id' : event.id, 'user' : event.user, 'description' : event.description,
                     'd_start' : d_start, 'd_end' : d_end, 'place' : event.place
@@ -106,8 +106,8 @@ def event_save_schedule(request):
         response_data['result'] = 'success!'
         response_data['description'] = p_event.description
         response_data['place'] = p_event.place
-        response_data['time-start'] = p_event.datetime_start
-        response_data['time-finish'] = p_event.datetime_finish
+        response_data['time-start'] = p_event.date_start
+        response_data['time-finish'] = p_event.date_finish
 
         return HttpResponse(
             json.dumps(response_data),
@@ -128,8 +128,8 @@ def _create_personal_event(request):
     p_event.user = request.user
     p_event.description = request.POST.get('description')
     p_event.place = request.POST.get('place')
-    p_event.datetime_start = request.POST.get('time_start')
-    p_event.datetime_finish = request.POST.get('time_finish')
+    p_event.date_start = request.POST.get('time_start')
+    p_event.date_finish = request.POST.get('time_finish')
 
     print(request.POST.get('description'))
     print(request.POST.get('place'))
