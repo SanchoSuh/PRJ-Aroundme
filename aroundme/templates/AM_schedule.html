@@ -4,7 +4,10 @@
 {% block AM_schedule %}
     <!-- Left blank 25% of the screen -->
     <div class="col-md-3" id="left-layout">
-
+        <div class="thumbnail-image">
+            <img src = "{{ member.thumbnail.image.url }}" class="img-thumbnail" width="200" height="200">
+            <p class="thumbnail-desc"> {{ member.thumbnail.description }} </p>
+        </div>
     </div>
 
     <!-- main body of Event tab -->
@@ -28,7 +31,7 @@
                 <div id="button-add-schedule">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-schedule-modal">Add event</button>
                         <div class="modal fade" id="add-schedule-modal" tabindex="-1" role="dialog" aria-labelledby="add-modal-label" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog" role="document" id="event-modal"  data-value1="" data-value2="">
                                 <div class="modal-content">
 
                                     <div class="modal-header">
@@ -79,7 +82,7 @@
                 {% for event in event_list_set %}
                     <div class="event-list" id="{{ event.id }}" data-value="{{ event.type }}">
                         <p><h4>{{ event.description }} </h4></p>
-                        <span class="event-list-item">{{ event.d_start }} ~ {{ event.d_end }}    @ {{ event.place }}</span>
+                        <span class="event-list-item">{{ event.d_start }} ~ {{ event.d_end }}            @ {{ event.place }}</span>
                         <span class="event-list-item-delete">Delete</span>
                     </div>
                 {% empty %}

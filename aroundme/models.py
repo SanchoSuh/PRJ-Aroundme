@@ -2,13 +2,22 @@ from django.db import models
 from django.conf import settings
 
 
+# Photo Model
+
+class Photo(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    image = models.ImageField(upload_to='%Y/%m/%d/', blank=True, null=True)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 # Model related to user / members
 
-class Member(models.Model) :
+class Member(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=30)
     birthday = models.DateField(null=True, blank=True)
-#    photo =
+    thumbnail = models.ForeignKey(Photo, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -16,7 +25,7 @@ class Member(models.Model) :
         return self.name
 
 
-class Friend(models.Model) :
+class Friend(models.Model):
     name = models.CharField(max_length=30)
     birthday = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,12 +36,10 @@ class Friend(models.Model) :
 
 # Models related to Events
 
-class EventBase(models.Model) :
+class EventBase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-#    opponent = models.ForeignKey('Member', on_delete = models.CASCADE, related_name='%(class)s_member_sub')
     description = models.TextField(null=True, blank=True)
     place = models.TextField(max_length=100, null=True, blank=True)
-#   photo =
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -40,15 +47,10 @@ class EventBase(models.Model) :
         abstract = True
 
 
-class Anniversary(EventBase) :
+class Anniversary(EventBase):
     date = models.DateField()
 
 
-class PersonalEvent(EventBase) :
+class PersonalEvent(EventBase):
     date_start = models.DateField()
     date_finish = models.DateField()
-
-
-
-# Photo Model
-

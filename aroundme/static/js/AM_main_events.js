@@ -1,9 +1,9 @@
 /* When clicking 'logout' button */
 $('#logout_button').on("click", function() {
-    $.get("login.html", function() {
+//    $.get("login.html", function() {
         location.replace('/login/');
         alert("logged out");
-    });
+//    });
 });
 
 
@@ -28,6 +28,8 @@ function add_schedule() {
             time_start : $('#event-time-start').val(),
             time_finish : $('#event-time-end').val(),
             place : $('#event-place').val(),
+            id : $('#event-modal').data('value1'),
+            type : $('#event-modal').data('value2')
         },
 
         success : function(json) {
@@ -55,14 +57,52 @@ $('.event-list').on("click", function(event) {
 /* when the schedule item is double clicked */
 $('.event-list').dblclick(function() {
     console.log('event list double-clicked');
+    console.log($(this).attr('id'));
+    console.log($(this).data('value'));
+
+    _ajaxSetup();
 
     // Get data from server via AJAX
+    $.ajax( {
+        url : "/get_schedule/",
+        type : "POST",
+        data : {
+            id : $(this).attr('id'),
+            type : $(this).data('value'),
+        },
 
-    var modal = $('#add-schedule-modal').modal({
+        success : function(json) {
+            console.log('edit_schedule ajax send success');
+            console.log(json);
+            displayEventEditModal(json);
+        },
+        error : function(error) {
+            console.log(error);
+        }
 
     });
+});
 
-    modal.find('.modal-title').text("test");
+function displayEventEditModal(jsonData) {
+    var modal = $('#add-schedule-modal').modal();
+
+    modal.find('.modal-title').text('Edit event');
+    modal.find('#event-description').val(jsonData.description);
+    modal.find('#event-place').val(jsonData.place);
+    modal.find('#event-time-start').val(jsonData.date_start);
+    modal.find('#event-time-end').val(jsonData.date_finish);
+    modal.find('#event-modal').data('value1', jsonData.id);
+    modal.find('#event-modal').data('value2', jsonData.type);
+};
+
+$('#add-schedule-modal').on('hide.bs.modal', function() {
+    $(this).find('.modal-title').text('Add New Schedule');
+    $(this).find('#event-description').val('');
+    $(this).find('#event-place').val('');
+    $(this).find('#event-time-start').val('');
+    $(this).find('#event-time-end').val('');
+    $(this).find('#event-modal').data('value1', "");
+    $(this).find('#event-modal').data('value2', "");
 });
 
 
@@ -73,16 +113,7 @@ $('.event-list-item-delete').on("click", function(event) {
     console.log('delete button');
     console.log(csrftoken);
 
-    $.ajaxSetup( {
-        beforeSend : function(xhr,settings) {
-            if(!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                console.log('ajax before-send : setting csrf token succeeded ');
-            } else {
-                console.log('ajax before-send : failed');
-            }
-        }
-    });
+    _ajaxSetup();
 
     $.ajax( {
         url : "/delete_schedule/",
@@ -100,7 +131,7 @@ $('.event-list-item-delete').on("click", function(event) {
             console.log(error);
         }
 
-    })
+    });
 });
 
 
@@ -127,5 +158,18 @@ var csrftoken = getCookie('csrftoken');;
 
 function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+function _ajaxSetup() {
+    $.ajaxSetup( {
+        beforeSend : function(xhr,settings) {
+            if(!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                console.log('ajax before-send : setting csrf token succeeded ');
+            } else {
+                console.log('ajax before-send : failed');
+            }
+        }
+    });
 }
 

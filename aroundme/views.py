@@ -10,7 +10,7 @@ import json
 from itertools import chain
 
 from .my_exceptions import EmptyQuerySetException
-from .models import Member, Friend, PersonalEvent, Anniversary
+from .models import Member, Friend, PersonalEvent, Anniversary, Photo
 from .forms import SignupForm
 
 
@@ -51,6 +51,7 @@ def view_main_page(request):
 def view_event_list(request):
     p_events = PersonalEvent.objects.filter(user=request.user)
     a_events = Anniversary.objects.filter(user=request.user)
+    member = Member.objects.get(user=request.user)
 
     event_list = sorted(
         chain(p_events, a_events),
@@ -86,8 +87,11 @@ def view_event_list(request):
                 event_list_set.append(event_dict)
 
 
+    print('member data validation check : name : %s, thumbnail: %s' % (member.name, member.thumbnail))
+
     context = RequestContext(request, {
         'event_list_set': event_list_set,
+        'member' : member,
     })
 
     return render(request, 'AM_schedule.html', context)
@@ -98,16 +102,48 @@ def view_event_list(request):
 @login_required
 @csrf_exempt
 def event_save_schedule(request):
+    data_id = request.POST.get('id')
+    data_type = request.POST.get('type')
+
+    response_data = {}
 
     if request.method == 'POST':
-        p_event = _create_personal_event(request)
-        response_data = {}
+        if data_id:
+            print('views:event_save_schedule | in case of editing a pre-saved schedule')
+            try:
+                if data_type == 'Anniversary':
+                    print('[debug] anniversary')
+                    get_anniversary = Anniversary.objects.get(id=data_id)
+                    get_anniversary.description = request.POST.get('description')
+                    get_anniversary.place = request.POST.get('place')
+                    get_anniversary.date = request.POST.get('time_start')
+                    # TODO: Anniversary shouldn't have start or finish
+                    get_anniversary.save()
 
-        response_data['result'] = 'success!'
-        response_data['description'] = p_event.description
-        response_data['place'] = p_event.place
-        response_data['time-start'] = p_event.date_start
-        response_data['time-finish'] = p_event.date_finish
+                elif data_type == 'p_event':
+                    print('[debug] personal event')
+                    get_pevent = PersonalEvent.objects.get(id=data_id)
+                    get_pevent.description = request.POST.get('description')
+                    get_pevent.place = request.POST.get('place')
+                    get_pevent.date_start = request.POST.get('time_start')
+                    get_pevent.date_finish = request.POST.get('time_finish')
+                    get_pevent.save()
+
+            except ObjectDoesNotExist:
+                print('[error] ObjectDoesNotExist - getting event from models by id')
+
+            else:
+                response_data['result'] = 'success'
+
+        else:
+            print('views:event_save_schedule | in case of creating new schedule')
+            p_event = _create_personal_event(request)
+
+            response_data['result'] = 'success'
+            response_data['description'] = p_event.description
+            response_data['place'] = p_event.place
+            response_data['time-start'] = p_event.date_start
+            response_data['time-finish'] = p_event.date_finish
 
         return HttpResponse(
             json.dumps(response_data),
@@ -170,6 +206,68 @@ def event_delete_schedule(request):
             print('delete case type/id not exist')
             print('type : %s, id : %s' % (delete_type, delete_id))
     else:
-        print('weird...GET case of event_delete_schedule')
+        print('views:event_delete_schedule | NOT POST of HttpRequest')
 
     return redirect(view_event_list)
+
+@login_required
+def event_get_schedule(request) :
+    print('in views:event_edit_schedule')
+
+    response_data = {}
+
+    if request.method == 'POST':
+        try:
+            edit_id = request.POST.get('id')
+            edit_type = request.POST.get('type')
+
+            if edit_type == 'p_event':
+                try:
+                    edit_p_event = PersonalEvent.objects.get(id=edit_id)
+                    response_data['result'] = 'success'
+                    response_data['id'] = edit_id
+                    response_data['type'] = edit_type
+                    response_data['description'] = edit_p_event.description
+                    response_data['place'] = edit_p_event.place
+                    response_data['date_start'] = edit_p_event.date_start
+                    response_data['date_finish'] = edit_p_event.date_finish
+
+                except ObjectDoesNotExist:
+                    print('views:event_edit_schedule | PersonalEvent id %d not exit' % edit_id)
+
+            elif edit_type == 'anniversary':
+                try:
+                    edit_a_event = Anniversary.objects.get(id=edit_id)
+                    response_data['result'] = 'success'
+                    response_data['id'] = edit_id
+                    response_data['type'] = edit_type
+                    response_data['description'] = edit_a_event.description
+                    response_data['place'] = edit_a_event.place
+                    response_data['date_start'] = edit_a_event.date
+                    response_data['date_finish'] = edit_a_event.date
+
+                except ObjectDoesNotExist:
+                    print('views:event_edit_schedule | PersonalEvent id %d not exit' % edit_id)
+
+            else:
+                print('views:event_edit_schedule | Type error. Nor p_event neither Anniversary')
+                response_data['result'] = 'fail'
+
+        except ObjectDoesNotExist:
+            print('views:event_edit_schedule | object not exist')
+            response_data['result'] = 'fail'
+    else:
+        print('views:event_edit_schedule | NOT POST of HttpRequest')
+        response_data['result'] = 'fail'
+
+    return HttpResponse(
+                json.dumps(response_data, default=date_handler),
+                content_type="application/json"
+            )
+
+
+def date_handler(obj):
+    if hasattr(obj, 'isoformat'):
+        return obj.isoformat()
+    else:
+        raise TypeError

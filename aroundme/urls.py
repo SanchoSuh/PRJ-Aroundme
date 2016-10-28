@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib.auth.views import login as django_login
 from django.contrib.auth.views import logout as django_logout
 
@@ -32,5 +34,11 @@ urlpatterns = [
     url(r'^$', views.view_event_list, name='view_event_list'),
     #url(r'^$', views.view_main_page, name='view_main_page'),
     url(r'^add_schedule/$', views.event_save_schedule, name='event_save_schedule'),
-    url(r'^delete_schedule/$', views.event_delete_schedule, name='event_delete_schedule')
+    url(r'^delete_schedule/$', views.event_delete_schedule, name='event_delete_schedule'),
+    url(r'^get_schedule/$', views.event_get_schedule, name='event_get_schedule')
 ]
+
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
