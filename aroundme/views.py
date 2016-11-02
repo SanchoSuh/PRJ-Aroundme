@@ -3,9 +3,10 @@ from django.template import RequestContext
 from django.db.models.query import EmptyQuerySet
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login, authenticate
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import json
 from itertools import chain
 
@@ -19,12 +20,39 @@ from .forms import SignupForm
 def view_member_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
+
         if form.is_valid():
-            user = User.objects.create_user(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password_input'],
-                email=form.cleaned_data['email_id']
-            )
+            # Create an User
+            try:
+                user = User.objects.create_user(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password_input'],
+                    email=form.cleaned_data['email_id']
+                )
+            except ValueError:
+                print('value error while creating user')
+
+            # and create a member and map with the user
+            # todo: membername unique validation
+            try:
+                member = Member()
+                member.user = user
+                member.name = user.username
+                member.thumbnail = _create_default_thumbnail(user, user.username)
+                member.save()
+
+                user.set_password(form.cleaned_data['password_input'])
+                # login to the new user
+                user = authenticate(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password_input'],
+                )
+                auth_login(request, user)
+
+            except ValidationError:
+                print('validation error : %s %s' % member.user, member.name)
+                print('alert')
+
             return redirect(view_event_list)
     else:  # HTTP GET case
         form = SignupForm()
@@ -34,6 +62,16 @@ def view_member_signup(request):
     })
 
     return render(request, 'registration/signup.html', content)
+
+# Create a default thumbnail image and link to member
+def _create_default_thumbnail(user, username):
+    d_photo = Photo()
+
+    d_photo.user = user
+    d_photo.description = username
+    d_photo.save()
+
+    return d_photo
 
 
 # View methods of main page (checking User login / out)

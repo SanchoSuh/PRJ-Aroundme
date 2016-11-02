@@ -1,0 +1,151 @@
+WARNING 2016-10-31 02:10:11,287 base 57861 4414414848 Not Found: /favicon.ico
+ERROR 2016-11-01 14:40:12,384 base 99635 4495593472 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 35, in view_member_signup
+    member.save()
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/base.py", line 651, in save
+    "unsaved related object '%s'." % field.name
+ValueError: save() prohibited to prevent data loss due to unsaved related object 'thumbnail'.
+ERROR 2016-11-01 14:51:05,496 base 131 4397191168 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/sqlite3/base.py", line 323, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: auth_user.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 27, in view_member_signup
+    email=form.cleaned_data['email_id']
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/models.py", line 154, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/models.py", line 148, in _create_user
+    user.save(using=self._db)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/base_user.py", line 74, in save
+    super(AbstractBaseUser, self).save(*args, **kwargs)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/base.py", line 700, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/base.py", line 728, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/base.py", line 812, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/base.py", line 851, in _do_insert
+    using=using, raw=raw)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/manager.py", line 122, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/query.py", line 1039, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/usr/local/lib/python3.5/site-packages/django/db/models/sql/compiler.py", line 1060, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python3.5/site-packages/django/db/utils.py", line 95, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/usr/local/lib/python3.5/site-packages/django/utils/six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python3.5/site-packages/django/db/backends/sqlite3/base.py", line 323, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: auth_user.username
+WARNING 2016-11-01 14:52:39,315 base 205 4434501632 Not Found: /admin
+ERROR 2016-11-01 15:34:26,973 base 1699 4451201024 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 43, in view_member_signup
+    auth_login(request, uesr)
+NameError: name 'uesr' is not defined
+ERROR 2016-11-01 15:35:06,088 base 1722 4570705920 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 43, in view_member_signup
+    auth_login(request, user)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 112, in login
+    request.session[BACKEND_SESSION_KEY] = user.backend
+AttributeError: 'User' object has no attribute 'backend'
+ERROR 2016-11-01 15:40:32,343 base 1911 4497371136 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 47, in view_member_signup
+    auth_login(request, user)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 111, in login
+    request.session[SESSION_KEY] = user._meta.pk.value_to_string(user)
+  File "/usr/local/lib/python3.5/site-packages/django/utils/functional.py", line 205, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute '_meta'
+ERROR 2016-11-01 15:49:41,983 base 2188 4347748352 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 48, in view_member_signup
+    auth_login(request, user)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 111, in login
+    request.session[SESSION_KEY] = user._meta.pk.value_to_string(user)
+  File "/usr/local/lib/python3.5/site-packages/django/utils/functional.py", line 205, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute '_meta'
+ERROR 2016-11-01 16:07:52,342 base 2767 4409479168 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 46, in view_member_signup
+    auth_login(request, user)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 111, in login
+    request.session[SESSION_KEY] = user._meta.pk.value_to_string(user)
+  File "/usr/local/lib/python3.5/site-packages/django/utils/functional.py", line 205, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute '_meta'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 48, in view_member_signup
+    except ValidationError:
+NameError: name 'ValidationError' is not defined
+ERROR 2016-11-01 16:09:19,917 base 2801 4517642240 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 46, in view_member_signup
+    auth_login(request, user)
+  File "/usr/local/lib/python3.5/site-packages/django/contrib/auth/__init__.py", line 111, in login
+    request.session[SESSION_KEY] = user._meta.pk.value_to_string(user)
+  File "/usr/local/lib/python3.5/site-packages/django/utils/functional.py", line 205, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute '_meta'
+ERROR 2016-11-02 00:24:23,594 base 3984 4381892608 Internal Server Error: /signup/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.5/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/coupang/Fastcamp/hwenv/aroundme/aroundme/views.py", line 50, in view_member_signup
+    auth_login(request, form.get_user())
+AttributeError: 'SignupForm' object has no attribute 'get_user'
